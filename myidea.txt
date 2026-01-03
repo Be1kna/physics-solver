@@ -1,0 +1,53 @@
+Contents:
+1 Kinematics
+1.1 1d Kinematics
+1.2 2d Kinematics
+1.3 Graphs
+2 Dynamics
+2.1 Basic Forces
+2.2 Block on the slope
+To be continued
+
+1.1 1d Kinematics
+Formulas: //V for velocity final and v for velocity initial
+    V = v + at 
+    Δd = vt+ (1/2)at²
+    V² = v² + 2aΔd
+    Δd = (1/2)(v+V)t
+    Δd = vt+ (1/2)at²
+    Δd = Vt - (1/2)at²
+Input: At least 3 of any values
+    V - Final Velocity (m/s)
+    v - Initial Velosity (m/s)
+    Δd - Distance (m)
+    a - acceleration (m/s²)
+    t - time (s)
+Output: 
+    Find the 2 missing values using Formulas
+    Explanation of the steps 
+    
+Example:
+    Input: v = 0 m/s, t = 3 s, Δd = 8 m
+    To find final velocity use one of these formulas: 
+        V = v + at
+        V² = v² + 2aΔd
+        Δd = (1/2)(v+V)t
+        Δd = Vt - (1/2)at²
+    Since we also don't know acceleration you can use this formula:
+        Δd = (1/2)(v+V)t
+    Reformat the formula:
+        V = (2Δd/t)-v
+    Substitute in:
+        V = (2*8/3)-0
+        V = 5.333 m/s
+    To find acceleration use one of these formulas:
+        V = v + at 
+        Δd = vt+ (1/2)at²
+        V² = v² + 2aΔd
+        Δd = vt+ (1/2)at²
+        Δd = Vt - (1/2)at²
+    Reformat the formula:
+        a = (V-v)/t
+    Substitute in: 
+        a = (5.333-0)/3
+        a = 1.777 m/s²

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Physics Solver — Table of Contents</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="top-bar container">
+    <a class="back-link-top" href="../index.html">← Projects</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button>
+  </div>
+  <main class="container">
+    <h1>Physics Solver</h1>
+    <ul>
+      <li>
+        <a id="kinematics-link" href="/physics-solver/kinematics" data-local="Kinematics/index.html">Kinematics</a>
+      </li>
+    </ul>
+  </main>
+  <script src="theme.js"></script>
+  <script>
+    (function(){
+      var a = document.getElementById('kinematics-link');
+      a.addEventListener('click', function(e){
+        if (location.protocol === 'file:'){
+          e.preventDefault();
+          location.href = this.getAttribute('data-local');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

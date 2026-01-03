@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kinematics — Physics Solver</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="top-bar container">
+    <a class="back-link-top" href="../index.html">← Physics Solver</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button>
+  </div>
+  <main class="container">
+    <h1>Kinematics — 1D</h1>
+
+    <form id="kin-form">
+      <p>Enter at least 3 known values (leave others blank).</p>
+      <label>Final velocity V (m/s)
+        <input name="V" id="V" type="number" step="any" placeholder="e.g. 5.0">
+      </label>
+      <label>Initial velocity v (m/s)
+        <input name="v" id="v" type="number" step="any" placeholder="e.g. 0">
+      </label>
+      <label>Distance Δd (m)
+        <input name="d" id="d" type="number" step="any" placeholder="e.g. 8">
+      </label>
+      <label>Acceleration a (m/s²)
+        <input name="a" id="a" type="number" step="any" placeholder="e.g. 1.5">
+      </label>
+      <label>Time t (s)
+        <input name="t" id="t" type="number" step="any" placeholder="e.g. 3">
+      </label>
+
+      <div class="form-actions">
+        <button type="submit">Solve</button>
+        <button type="button" id="reset">Reset</button>
+        <button type="button" id="back">Back to TOC</button>
+      </div>
+    </form>
+
+    <section id="results" aria-live="polite">
+      <h2>Results</h2>
+      <pre id="result-values">No results yet.</pre>
+
+      <section id="simulation">
+        <h2 class="visually-hidden">Simulation</h2>
+        <div class="sim-wrap">
+          <canvas id="sim-canvas" width="420" height="160" aria-label="Kinematics simulation"></canvas>
+          <div class="sim-sidebar">
+            <div class="sim-controls">
+              <button id="simulate" type="button">Simulate</button>
+              <button id="sim-reset" type="button">Reset</button>
+            </div>
+            <div class="sim-readouts">
+              <div>Time: <span id="sim-time">0.000</span> s</div>
+              <div>Velocity: <span id="sim-vel">0.000</span> m/s</div>
+              <div>Distance: <span id="sim-dist">0.000</span> m</div>
+            </div>
+          </div>
+        </div>
+        <p class="muted small sim-note">Simulation uses `v` (initial velocity), `a` (acceleration), and will run for provided `t`, or until distance `d` is reached, or until velocity reaches zero if decelerating.</p>
+      </section>
+
+      <h3>Steps</h3>
+      <div id="explanation" class="explanation">
+        <p class="muted">—</p>
+      </div>
+    </section>
+  </main>
+  <script src="../theme.js"></script>
+  <script src="kinematics.js"></script>
+</body>
+</html>
