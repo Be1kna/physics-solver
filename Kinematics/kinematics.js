@@ -126,45 +126,38 @@ document.addEventListener('DOMContentLoaded', function(){
     var start = null;
     var last = null;
     var finished = false;
-    var startX = null;
+    var startX = x;
     var movedAway = false;
     // compute target final velocity if provided
     var targetV = inputs.V != null ? inputs.V : (solved && solved.values && solved.values.V != null ? solved.values.V : null);
 
-    // estimate range of motion (min/max positions) so canvas shows full travel both forward and backward
+    // determine scale: estimate the maximum travel distance (not just net displacement)
+    // this uses analytic maxima for constant-acceleration motion so the canvas maps the full motion
     var estDist = 0;
     function posAt(t){ return v0*t + 0.5*a_local*t*t; }
     if (targetD != null) estDist = Math.abs(targetD);
     if (targetT != null){
+      // consider net displacement at targetT and any turning point where v = 0
       var atT = Math.abs(posAt(targetT));
       estDist = Math.max(estDist, atT);
       if (a_local !== 0){
-        var tPeak = -v0 / a_local;
-        if (tPeak > 0 && tPeak < targetT){ estDist = Math.max(estDist, Math.abs(posAt(tPeak))); }
+        var tPeak = -v0 / a_local; // time when velocity = 0
+        if (tPeak > 0 && tPeak < targetT){
+          estDist = Math.max(estDist, Math.abs(posAt(tPeak)));
+        }
       }
     }
-    if (estDist === 0){ if (a_local !== 0) estDist = Math.max(1, Math.abs((v0*v0)/(2*a_local))); else estDist = Math.max(1, Math.abs(v0) * 2); }
-
+    if (estDist === 0){
+      // fallback: estimate using stopping distance or a small default so scale is reasonable
+      if (a_local !== 0) estDist = Math.max(1, Math.abs((v0*v0)/(2*a_local)));
+      else estDist = Math.max(1, Math.abs(v0) * 2);
+    }
     var canvasW = (canvas ? canvas.clientWidth : 760);
     var pad = 24; // CSS pixels
     var usable = canvasW - pad*2;
-
-    // compute min/max positions over relevant times
-    var positions = [0];
-    if (targetT != null) positions.push(posAt(targetT));
-    if (a_local !== 0){ var tPeak2 = -v0 / a_local; if (tPeak2 > 0 && (targetT == null || tPeak2 <= targetT)) positions.push(posAt(tPeak2)); }
-    if (targetD != null) positions.push(targetD);
-    var minPos = Math.min.apply(null, positions);
-    var maxPos = Math.max.apply(null, positions);
-    var range = Math.abs(maxPos - minPos);
-    if (range < 1e-6) range = estDist;
-    var scale = range > 0 ? (usable / range) : 1; // CSS pixels per meter
+    var scale = estDist > 0 ? (usable / estDist) : 1; // CSS pixels per meter
 
     var ctx = canvas.getContext('2d');
-    // world offset so ball can start at the max positive point (visual right)
-    var worldOffset = maxPos;
-    var minWorld = minPos + worldOffset;
-    var targetD_world = (targetD != null) ? (targetD + worldOffset) : null;
     function drawFrame(){
       // use CSS pixel sizes (ctx is scaled to CSS pixels)
       var w = canvas.clientWidth;
@@ -180,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function(){
       ctx.lineTo(pad + usable, groundY);
       ctx.stroke();
 
-      var cx = pad + Math.min(usable, Math.max(0, (x - minWorld) * scale));
+      var cx = pad + Math.min(usable, Math.max(0, x*scale));
       var radius = 18;
       var cy = groundY - radius - 2; // small gap so circle appears on the line
       ctx.beginPath();
@@ -210,12 +203,13 @@ document.addEventListener('DOMContentLoaded', function(){
       if (!movedAway && Math.abs(x - startX) > 1e-6) movedAway = true;
       // stopping conditions
       if (targetT != null && elapsed >= targetT) finished = true;
-      if (targetD_world != null){
-        var delta = targetD_world - startX;
-        if (Math.abs(delta) < 1e-9){
-          if (movedAway && Math.abs(x - targetD_world) < 1e-3) finished = true;
-        } else if (delta > 0){ if (x >= targetD_world) finished = true; }
-        else { if (x <= targetD_world) finished = true; }
+      if (targetD != null){
+        var delta = targetD - startX;
+        if (delta === 0){
+          // require that we moved away first, then returned to target
+          if (movedAway && Math.abs(x - targetD) < 1e-3) finished = true;
+        } else if (delta > 0){ if (x >= targetD) finished = true; }
+        else { if (x <= targetD) finished = true; }
       }
       if (targetV != null){
         if (targetV >= 0){ if (v >= targetV) finished = true; }
@@ -232,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function(){
     stopSim();
     // clear canvas and draw initial
     if (canvas){ ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight); }
-    x = worldOffset; startX = x; v = v0; start = null; last = null; finished = false;
+    x = 0; v = v0; start = null; last = null; finished = false;
     simAnim = requestAnimationFrame(step);
   });
 });
