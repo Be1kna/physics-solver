@@ -197,14 +197,14 @@ a{color:var(--accent)}
 
 /* Variant dropdown styling (Kinematics variant select) */
 .variant-select-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.variant-select-wrap label{font-weight:700;color:var(--muted);margin: 5px;}
+.variant-select-wrap label{font-weight:700;color:var(--muted)}
 #variant-select{
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding:8px 14px;
+  padding:10px 14px;
   font-size:1.05rem;
-  border-radius:15px;
+  border-radius:10px;
   border:1px solid #e6eef8;
   background: #fbfdff;
   min-width:260px;
@@ -217,4 +217,17 @@ a{color:var(--accent)}
 @media (max-width:700px){
   #variant-select{ min-width:160px; font-size:1rem }
 }
+
+/* Formulas modal (theme-aware) */
+.modal{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center}
+.modal[aria-hidden="false"]{display:flex}
+.modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.6)}
+.modal-content{position:relative;background:var(--card);border-radius:12px;max-width:720px;width:90%;padding:18px;box-shadow:0 20px 60px rgba(2,6,23,0.35);z-index:2;color:var(--text)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.modal-header h3{margin:0;font-size:1.15rem;color:var(--text)}
+.modal-close{background:transparent;border:0;font-size:1.6rem;cursor:pointer;color:var(--text);line-height:1}
+.modal-body{white-space:pre-wrap;background:transparent;padding:6px;margin:0;font-size:1.05rem;color:var(--text)}
+
+[data-theme="dark"] .modal-content{background:var(--card);color:var(--text);border:1px solid rgba(255,255,255,0.04)}
+[data-theme="dark"] .modal-close{color:var(--text)}
 

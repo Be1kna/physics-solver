@@ -72,4 +72,8 @@ Use the result box (initial velocity, acceleration, time)
     to find distance and velocity at each time point
     stop when time is finished
 
+𝑣 or 𝑣𝑓
+𝑣0 or 𝑣𝑖 or v₀
 
+v=u+at
+𝑣=𝑢+𝑎𝑡

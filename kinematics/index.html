@@ -9,6 +9,7 @@
 <body>
   <div class="top-bar container">
     <a class="back-link-top" href="../index.html">← Physics Solver</a>
+    <button id="show-formulas" class="back-link-top" type="button">Formulas</button>
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button>
   </div>
   <main class="container">
@@ -76,5 +77,20 @@
   </main>
   <script src="../theme.js"></script>
   <script src="kinematics.js"></script>
+  <!-- Formulas modal -->
+  <div id="formula-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-header">
+        <h3 id="modal-title">Kinematics Formulas</h3>
+        <button id="close-formulas" class="modal-close">✕</button>
+      </header>
+      <pre class="modal-body">V = v + at
+V² = v² + 2aΔd
+Δd = (1/2)(v+V)t
+Δd = vt + (1/2)at²
+Δd = Vt - (1/2)at²</pre>
+    </div>
+  </div>
 </body>
 </html>

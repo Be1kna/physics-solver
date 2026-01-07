@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function(){
   var simTimeEl = document.getElementById('sim-time');
   var simVelEl = document.getElementById('sim-vel');
   var simDistEl = document.getElementById('sim-dist');
+  var showFormBtn = document.getElementById('show-formulas');
+  var formulaModal = document.getElementById('formula-modal');
+  var closeFormBtn = null; // will query after modal exists
 
   var latestSolve = null; // store last solver result
 
@@ -379,7 +382,31 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  form && form.addEventListener('submit', function(e){ e.preventDefault(); var inputs = parseInputs(); var solved = solveKinematics(inputs); renderSolve(solved); });
+  form && form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var inputs = parseInputs();
+    var count = Object.keys(inputs).reduce(function(c,k){ return c + (inputs[k] != null ? 1 : 0); }, 0);
+    if (count !== 3){
+      resultValues.textContent = 'Please provide exactly 3 inputs.';
+      explanation.innerHTML = '<p class="muted">Provide exactly three known values.</p>';
+      latestSolve = null;
+      return;
+    }
+    var solved = solveKinematics(inputs);
+    renderSolve(solved);
+  });
+
+  // Modal handlers (show formulas)
+  if (showFormBtn){
+    showFormBtn.addEventListener('click', function(){ if (!formulaModal) return; formulaModal.setAttribute('aria-hidden','false'); });
+  }
+  if (formulaModal){
+    closeFormBtn = document.getElementById('close-formulas');
+    formulaModal.addEventListener('click', function(ev){ if (ev.target === formulaModal || ev.target.classList.contains('modal-backdrop')){ formulaModal.setAttribute('aria-hidden','true'); } });
+    if (closeFormBtn) closeFormBtn.addEventListener('click', function(){ formulaModal.setAttribute('aria-hidden','true'); });
+    // allow Escape to close
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && formulaModal && formulaModal.getAttribute('aria-hidden') === 'false'){ formulaModal.setAttribute('aria-hidden','true'); } });
+  }
 
   // --- Canvas & simulation logic (preserve behavior) ---
   var simAnim = null; var ctx = null;
