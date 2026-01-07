@@ -405,18 +405,60 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // simulation uses `latestSolve.values` (including any chosen variant merged there)
 
-    // compute estimate distance and scale
+    // compute a sensible display range by sampling positions at relevant times
     function posAt(t){ return v0*t + 0.5*a_local*t*t; }
-    var estDist = 0; if (targetD != null) estDist = Math.abs(targetD); if (targetT != null){ var atT = Math.abs(posAt(targetT)); estDist = Math.max(estDist, atT); if (a_local !== 0){ var tPeak = -v0/a_local; if (tPeak>0 && tPeak<targetT) estDist = Math.max(estDist, Math.abs(posAt(tPeak))); } }
-    if (estDist === 0){ if (a_local !== 0) estDist = Math.max(1, Math.abs((v0*v0)/(2*a_local))); else estDist = Math.max(1, Math.abs(v0)*2); }
-    var canvasW = (canvas ? canvas.clientWidth : 760); var pad = 24; var usable = canvasW - pad*2; var scale = estDist > 0 ? (usable / estDist) : 1;
+    var sampleTimes = [0];
+    if (targetT != null && targetT > 0) sampleTimes.push(targetT);
+    if (Math.abs(a_local) > 1e-12){
+      var tPeak = -v0 / a_local;
+      if (tPeak > 0) sampleTimes.push(tPeak);
+    }
+    // heuristic short duration to show movement if no targets provided
+    var heuristicT = Math.max(0.5, Math.abs(v0) / Math.max(1e-3, Math.abs(a_local)));
+    sampleTimes.push(heuristicT);
+    sampleTimes.push(heuristicT * 2);
+
+    var positions = sampleTimes.map(function(tt){ return posAt(tt); });
+    if (targetD != null) positions.push(targetD);
+    // derive min/max from samples
+    var rightMax = Math.max.apply(null, positions);
+    var leftMin = Math.min.apply(null, positions);
+    // add small padding
+    var padFraction = 0.03;
+    var span = Math.max(1e-6, rightMax - leftMin);
+    var extra = span * padFraction;
+    rightMax += extra; leftMin -= extra;
+    // ensure zero is visible if movement is small
+    var rangeMin = Math.min(0, leftMin);
+    var rangeMax = Math.max(0, rightMax);
+    var usableRange = rangeMax - rangeMin;
+    if (usableRange <= 0) usableRange = Math.max(1, Math.abs(v0) * 2);
+    var canvasW = (canvas ? canvas.clientWidth : 760); var pad = 24; var usable = canvasW - pad*2; var scale = usable / usableRange;
 
     var ctx2 = canvas.getContext('2d');
     // nothing further: targets already taken from latestSolve.values
 
-    function drawFrame(){ var w = canvas.clientWidth; var h = canvas.clientHeight; ctx2.clearRect(0,0,w,h); var groundY = h - 36; ctx2.strokeStyle = 'rgba(15,23,42,0.12)'; ctx2.lineWidth = 4; ctx2.beginPath(); ctx2.moveTo(pad, groundY); ctx2.lineTo(pad+usable, groundY); ctx2.stroke(); var cx = pad + Math.min(usable, Math.max(0, x*scale)); var radius = 18; var cy = groundY - radius - 2; ctx2.beginPath(); ctx2.fillStyle = '#1e40af'; ctx2.arc(cx, cy, radius, 0, Math.PI*2); ctx2.fill(); }
+    function drawFrame(){ var w = canvas.clientWidth; var h = canvas.clientHeight; ctx2.clearRect(0,0,w,h); var groundY = h - 36; ctx2.strokeStyle = 'rgba(15,23,42,0.12)'; ctx2.lineWidth = 4; ctx2.beginPath(); ctx2.moveTo(pad, groundY); ctx2.lineTo(pad+usable, groundY); ctx2.stroke(); var cx = pad + Math.min(usable, Math.max(0, (x - rangeMin)*scale)); var radius = 18; var cy = groundY - radius - 2; ctx2.beginPath(); ctx2.fillStyle = '#1e40af'; ctx2.arc(cx, cy, radius, 0, Math.PI*2); ctx2.fill(); }
 
-    function step(ts){ if (!start) { start = ts; last = ts; } var dt = (ts-last)/1000; last = ts; v += a_local*dt; x += v*dt; var elapsed = (ts-start)/1000; if (simTimeEl) simTimeEl.textContent = (Math.round(elapsed*10000)/10000).toFixed(4); if (simVelEl) simVelEl.textContent = (Math.round(v*10000)/10000).toFixed(4); if (simDistEl) simDistEl.textContent = (Math.round(x*10000)/10000).toFixed(4); if (simVelEl) simVelEl.title = String(v); if (simDistEl) simDistEl.title = String(x); drawFrame(); if (!movedAway && Math.abs(x-startX) > 1e-6) movedAway = true; if (targetT != null && elapsed >= targetT) finished = true; if (targetD != null){ var delta = targetD - startX; if (delta === 0){ if (movedAway && Math.abs(x-targetD) < 1e-3) finished = true; } else if (delta>0){ if (x >= targetD) finished = true; } else { if (x <= targetD) finished = true; } } if (targetV != null){ if (targetV >= 0){ if (v >= targetV) finished = true; } else { if (v <= targetV) finished = true; } } if (!finished) simAnim = requestAnimationFrame(step); else simAnim = null; }
+    function step(ts){
+      if (!start) { start = ts; last = ts; }
+      var dt = (ts-last)/1000; last = ts;
+      v += a_local*dt;
+      x += v*dt;
+      var elapsed = (ts-start)/1000;
+      if (simTimeEl) simTimeEl.textContent = (Math.round(elapsed*10000)/10000).toFixed(4);
+      if (simVelEl) simVelEl.textContent = (Math.round(v*10000)/10000).toFixed(4);
+      if (simDistEl) simDistEl.textContent = (Math.round(x*10000)/10000).toFixed(4);
+      if (simVelEl) simVelEl.title = String(v);
+      if (simDistEl) simDistEl.title = String(x);
+      drawFrame();
+      if (!movedAway && Math.abs(x-startX) > 1e-6) movedAway = true;
+      // If a target time is provided, stop only when time elapses. Otherwise, fall back to distance/velocity conditions.
+      if (targetT != null){
+        if (elapsed >= targetT) finished = true;
+      }
+      if (!finished) simAnim = requestAnimationFrame(step); else simAnim = null;
+    }
 
     stopSim(); if (canvas) ctx2.clearRect(0,0,canvas.clientWidth,canvas.clientHeight); x = 0; v = v0; start = null; last = null; finished = false; simAnim = requestAnimationFrame(step);
   });
