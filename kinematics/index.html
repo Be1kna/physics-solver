@@ -17,13 +17,13 @@
 
     <form id="kin-form">
       <p>Enter at least 3 known values (leave others blank).</p>
-      <label>Final velocity V (m/s)
+      <label>Final velocity v (m/s)
         <input name="V" id="V" type="number" step="any" placeholder="e.g. 5.0">
       </label>
-      <label>Initial velocity v (m/s)
+      <label>Initial velocity v₀ (m/s)
         <input name="v" id="v" type="number" step="any" placeholder="e.g. 0">
       </label>
-      <label>Distance Δd (m)
+      <label>Displacement Δx (m)
         <input name="d" id="d" type="number" step="any" placeholder="e.g. 8">
       </label>
       <label>Acceleration a (m/s²)
@@ -43,7 +43,7 @@
     <section id="results" aria-live="polite">
       <div class="variant-select-wrap">
         <label for="variant-select">Choose variant:</label>
-        <select id="variant-select" aria-label="Choose V/t variant">
+        <select id="variant-select" aria-label="Choose variant (v/v₀)">
           <option value="auto">Auto (variant with longest t)</option>
         </select>
       </div>
@@ -66,7 +66,7 @@
             </div>
           </div>
         </div>
-        <p class="muted small sim-note">Simulation uses `v` (initial velocity), `a` (acceleration), and will run for provided `t`, or until distance `d` is reached.</p>
+        <p class="muted small sim-note">Simulation uses `v₀` (initial velocity), `a` (acceleration), and will run for provided `t`, or until displacement `Δx` is reached.</p>
       </section>
 
       <h3>Steps</h3>
@@ -85,11 +85,11 @@
         <h3 id="modal-title">Kinematics Formulas</h3>
         <button id="close-formulas" class="modal-close">✕</button>
       </header>
-      <pre class="modal-body">V = v + at
-V² = v² + 2aΔd
-Δd = (1/2)(v+V)t
-Δd = vt + (1/2)at²
-Δd = Vt - (1/2)at²</pre>
+      <pre class="modal-body">v = v₀ + at
+    v² = v₀² + 2aΔx
+    Δx = (1/2)(v₀+v)t
+    Δx = v₀t + (1/2)at²
+    Δx = v t - (1/2)at²</pre>
     </div>
   </div>
 </body>

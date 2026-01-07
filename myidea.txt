@@ -9,16 +9,16 @@ Contents:
 To be continued
 
 1.1 1d Kinematics
-Formulas: //V for velocity final and v for velocity initial
-    V = v + at 
-    V² = v² + 2aΔd
-    Δd = (1/2)(v+V)t
-    Δd = vt + (1/2)at²
-    Δd = Vt - (1/2)at²
+Formulas: //v for final velocity and v₀ for initial velocity
+    v = v₀ + at
+    v² = v₀² + 2aΔx
+    Δx = (1/2)(v₀+v)t
+    Δx = v₀t + (1/2)at²
+    Δx = v t - (1/2)at²
 Input: 3 of any values
-    V - Final Velocity (m/s)
-    v - Initial Velosity (m/s)
-    Δd - Distance (m)
+    v - Final Velocity (m/s)
+    v₀ - Initial Velocity (m/s)
+    Δx - Displacement (m)
     a - acceleration (m/s²)
     t - time (s)
 Output: 
@@ -29,18 +29,18 @@ Output:
 Steps Example:
 <step-box>
     To find final velocity you can use this formula based on given values:
-        Δd = (1/2)(v+V)t
+        Δx = (1/2)(v₀+v)t
     Reformat the formula:
-        V = (2Δd/t)-v
+        v = (2Δx/t) - v₀
     Substitute in:
-        V = (2*8/3)-0
-        V = 5.333 m/s
+        v = (2*8/3)-0
+        v = 5.333 m/s
     </step-box>
 <step-box>
     To find acceleration you can use this formula based on given values:
-        V = v + at 
+        v = v₀ + at 
     Reformat the formula:
-        a = (V-v)/t
+        a = (v - v₀)/t
     Substitute in: 
         a = (5.333-0)/3
         a = 1.777 m/s²
@@ -52,16 +52,16 @@ If input has both V and v, or doesn't have both:
     Continue regulary - should be standard (without variants):
     Find one of the missing variables by choosing most optimal formula:
         Order for most optimal formula from most preffered to least preffered:
-        V = v + at 
-        V² = v² + 2aΔd
-        Δd = (1/2)(v+V)t
-        Δd = vt + (1/2)at²
-        Δd = Vt - (1/2)at²
+        v = v₀ + at 
+        v² = v₀² + 2aΔx
+        Δx = (1/2)(v₀+v)t
+        Δx = v₀t + (1/2)at²
+        Δx = v t - (1/2)at²
     Find the second missing variable by choosing most optimal formula
     Display results in Result box, Use results to create a simulation, Show steps as on line 28-50
 If input doesn't have (v or V) and also doesn't have t:
     Find the missing v or V from this equation:
-    V² = v² + 2aΔd
+    v² = v₀² + 2aΔx
     Answer should be in root, meaning it can be negative or positive.
     Give user an option to choose with option to use or use auto (which one results in bigger time)
     Calculate time using the selected root.
@@ -71,9 +71,3 @@ Simulation:
 Use the result box (initial velocity, acceleration, time) 
     to find distance and velocity at each time point
     stop when time is finished
-
-𝑣 or 𝑣𝑓
-𝑣0 or 𝑣𝑖 or v₀
-
-v=u+at
-𝑣=𝑢+𝑎𝑡

@@ -76,111 +76,111 @@ document.addEventListener('DOMContentLoaded', function(){
     var changed = true;
     while (changed){
       changed = false;
-      // Find initial velocity v
+      // Find initial velocity v₀
       if (vals.v == null){
-        //V = v + at - find v from V, a, t
+        // v = v₀ + a t - find v₀ from v, a, t
         if (vals.V != null && vals.a != null && vals.t != null){
           vals.v = vals.V - vals.a*vals.t;
-          steps.push(makeStepText('find initial velocity', 'V = v + a·t', 'v = V - a·t', 'v = ' + formatVal(vals.V) + ' - ' + formatVal(vals.a) + '·' + formatVal(vals.t), 'v = ' + formatVal(vals.v) + ' m/s'));
+          steps.push(makeStepText('find initial velocity', 'v = v₀ + a·t', 'v₀ = v - a·t', 'v₀ = ' + formatVal(vals.V) + ' - ' + formatVal(vals.a) + '·' + formatVal(vals.t), 'v₀ = ' + formatVal(vals.v) + ' m/s'));
           changed = true; continue;
         }
-        // Δd = 0.5 (v+V) t - find v from d, V, t
+        // Δx = 0.5 (v₀+v) t - find v₀ from x, v, t
         if (vals.d != null && vals.V != null && vals.t != null){
           vals.v = (2*vals.d/vals.t) - vals.V;
-          steps.push(makeStepText('find initial velocity', 'Δd = 0.5·(v+V)·t', 'v = (2Δd/t) - V', 'v = (2*' + formatVal(vals.d) + '/' + formatVal(vals.t) + ') - ' + formatVal(vals.V), 'v = ' + formatVal(vals.v) + ' m/s'));
+          steps.push(makeStepText('find initial velocity', 'Δx = 0.5·(v₀+v)·t', 'v₀ = (2Δx/t) - v', 'v₀ = (2*' + formatVal(vals.d) + '/' + formatVal(vals.t) + ') - ' + formatVal(vals.V), 'v₀ = ' + formatVal(vals.v) + ' m/s'));
           changed = true; continue;
         }
-        // Δd = v t + 0.5 a t^2 - find v from d, a, t
+        // Δx = v₀ t + 0.5 a t^2 - find v₀ from x, a, t
         if (vals.d != null && vals.a != null && vals.t != null && Math.abs(vals.t) > 1e-12){
           vals.v = (vals.d - 0.5*vals.a*vals.t*vals.t)/vals.t;
-          steps.push(makeStepText('find initial velocity', 'Δd = v·t + 0.5·a·t²', 'v = (Δd - 0.5·a·t²)/t', 'v = (' + formatVal(vals.d) + ' - 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²)/' + formatVal(vals.t), 'v = ' + formatVal(vals.v) + ' m/s'));
+          steps.push(makeStepText('find initial velocity', 'Δx = v₀·t + 0.5·a·t²', 'v₀ = (Δx - 0.5·a·t²)/t', 'v₀ = (' + formatVal(vals.d) + ' - 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²)/' + formatVal(vals.t), 'v₀ = ' + formatVal(vals.v) + ' m/s'));
           changed = true; continue;}  }
-      // Find final velocity V
+      // Find final velocity v
       if (vals.V == null){
-        // V = v + a t - find V from v, a, t
+        // v = v₀ + a t - find v from v₀, a, t
         if (vals.v != null && vals.a != null && vals.t != null){
           vals.V = vals.v + vals.a*vals.t;
-          steps.push(makeStepText('find final velocity', 'V = v + a·t', 'V = v + a·t', 'V = ' + formatVal(vals.v) + ' + ' + formatVal(vals.a) + '·' + formatVal(vals.t), 'V = ' + formatVal(vals.V) + ' m/s'));
+          steps.push(makeStepText('find final velocity', 'v = v₀ + a·t', 'v = v₀ + a·t', 'v = ' + formatVal(vals.v) + ' + ' + formatVal(vals.a) + '·' + formatVal(vals.t), 'v = ' + formatVal(vals.V) + ' m/s'));
           changed = true; continue;
         }
-        // Δd = 0.5 (v+V) t - find V from d, v, t
+        // Δx = 0.5 (v₀+v) t - find v from x, v₀, t
         if (vals.d != null && vals.v != null && vals.t != null){
           vals.V = (2*vals.d/vals.t) - vals.v;
-          steps.push(makeStepText('find final velocity', 'Δd = 0.5·(v+V)·t', 'V = (2Δd/t) - v', 'V = (2*' + formatVal(vals.d) + '/' + formatVal(vals.t) + ') - ' + formatVal(vals.v), 'V = ' + formatVal(vals.V) + ' m/s'));
+          steps.push(makeStepText('find final velocity', 'Δx = 0.5·(v₀+v)·t', 'v = (2Δx/t) - v₀', 'v = (2*' + formatVal(vals.d) + '/' + formatVal(vals.t) + ') - ' + formatVal(vals.v), 'v = ' + formatVal(vals.V) + ' m/s'));
           changed = true; continue;
         }
-        //Δd = Vt - 0.5 at² - find V from d, a, t
+        //Δx = v·t - 0.5 a t² - find v from x, a, t
         if (vals.d != null && vals.a != null && vals.t != null){
           vals.V = (vals.d + 0.5*vals.a*vals.t*vals.t)/vals.t;
-          steps.push(makeStepText('find final velocity', 'Δd = V·t - 0.5·a·t²', 'V = (Δd + 0.5·a·t²)/t', 'V = (' + formatVal(vals.d) + ' + 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²)/' + formatVal(vals.t), 'V = ' + formatVal(vals.V) + ' m/s'));
+          steps.push(makeStepText('find final velocity', 'Δx = v·t - 0.5·a·t²', 'v = (Δx + 0.5·a·t²)/t', 'v = (' + formatVal(vals.d) + ' + 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²)/' + formatVal(vals.t), 'v = ' + formatVal(vals.V) + ' m/s'));
           changed = true; continue;
         }
       }
       // Find distance d
       if (vals.d == null){
-        // V² = v² + 2aΔd - find d from V, v, a
+        // v² = v₀² + 2aΔx - find x from v, v₀, a
         if (vals.V != null && vals.v != null && vals.a != null && Math.abs(vals.a) > 1e-12){
           vals.d = (vals.V*vals.V - vals.v*vals.v)/(2*vals.a);
-          steps.push(makeStepText('find distance', 'V² = v² + 2·a·Δd', 'Δd = (V² - v²)/(2·a)', 'Δd = (' + formatVal(vals.V) + '² - ' + formatVal(vals.v) + '²)/(2*' + formatVal(vals.a) + ')', 'Δd = ' + formatVal(vals.d) + ' m'));
+          steps.push(makeStepText('find distance', 'v² = v₀² + 2·a·Δx', 'Δx = (v² - v₀²)/(2·a)', 'Δx = (' + formatVal(vals.V) + '² - ' + formatVal(vals.v) + '²)/(2*' + formatVal(vals.a) + ')', 'Δx = ' + formatVal(vals.d) + ' m'));
           changed = true; continue;
         }
-        // Δd = 0.5 (v+V) t - find d from v, V, t
+        // Δx = 0.5 (v₀+v) t - find x from v₀, v, t
         if (vals.v != null && vals.V != null && vals.t != null){
           vals.d = 0.5*(vals.v + vals.V)*vals.t;
-          steps.push(makeStepText('find distance', 'Δd = 0.5·(v+V)·t', 'Δd = 0.5·(v+V)·t', 'Δd = 0.5·(' + formatVal(vals.v) + ' + ' + formatVal(vals.V) + ')·' + formatVal(vals.t), 'Δd = ' + formatVal(vals.d) + ' m'));
+          steps.push(makeStepText('find distance', 'Δx = 0.5·(v₀+v)·t', 'Δx = 0.5·(v₀+v)·t', 'Δx = 0.5·(' + formatVal(vals.v) + ' + ' + formatVal(vals.V) + ')·' + formatVal(vals.t), 'Δx = ' + formatVal(vals.d) + ' m'));
           changed = true; continue;
         }
-        // Δd = v t + 0.5 a t^2 - find d from v, a, t
+        // Δx = v₀ t + 0.5 a t^2 - find x from v₀, a, t
         if (vals.v != null && vals.a != null && vals.t != null){
           vals.d = vals.v*vals.t + 0.5*vals.a*vals.t*vals.t;
-          steps.push(makeStepText('find distance', 'Δd = v·t + 0.5·a·t²', 'Δd = v·t + 0.5·a·t²', 'Δd = ' + formatVal(vals.v) + '·' + formatVal(vals.t) + ' + 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²', 'Δd = ' + formatVal(vals.d) + ' m'));
+          steps.push(makeStepText('find distance', 'Δx = v₀·t + 0.5·a·t²', 'Δx = v₀·t + 0.5·a·t²', 'Δx = ' + formatVal(vals.v) + '·' + formatVal(vals.t) + ' + 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²', 'Δx = ' + formatVal(vals.d) + ' m'));
           changed = true; continue;
         }
-        // Δd = V t - 0.5 a t^2 - find d from V, a, t
+        // Δx = v·t - 0.5 a t^2 - find x from v, a, t
         if (vals.V != null && vals.t != null && vals.a != null){
           vals.d = vals.V*vals.t - 0.5*vals.a*vals.t*vals.t;
-          steps.push(makeStepText('find distance', 'Δd = V·t - 0.5·a·t²', 'Δd = V·t - 0.5·a·t²', 'Δd = ' + formatVal(vals.V) + '·' + formatVal(vals.t) + ' - 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²', 'Δd = ' + formatVal(vals.d) + ' m'));
+          steps.push(makeStepText('find distance', 'Δx = v·t - 0.5·a·t²', 'Δx = v·t - 0.5·a·t²', 'Δx = ' + formatVal(vals.V) + '·' + formatVal(vals.t) + ' - 0.5·' + formatVal(vals.a) + '·' + formatVal(vals.t) + '²', 'Δx = ' + formatVal(vals.d) + ' m'));
           changed = true; continue;
         }
       }
       // Find acceleration a
       if (vals.a == null){
-        // V = v + at - find a from V, v, t
+        // v = v₀ + a t - find a from v, v₀, t
         if (vals.V != null && vals.v != null && vals.t != null && Math.abs(vals.t) > 1e-12){
           vals.a = (vals.V - vals.v)/vals.t;
-          steps.push(makeStepText('find acceleration', 'V = v + a·t', 'a = (V - v)/t', 'a = (' + formatVal(vals.V) + ' - ' + formatVal(vals.v) + ')/' + formatVal(vals.t), 'a = ' + formatVal(vals.a) + ' m/s²'));
+          steps.push(makeStepText('find acceleration', 'v = v₀ + a·t', 'a = (v - v₀)/t', 'a = (' + formatVal(vals.V) + ' - ' + formatVal(vals.v) + ')/' + formatVal(vals.t), 'a = ' + formatVal(vals.a) + ' m/s²'));
           changed = true; continue;
         }
-        // V² = v² + 2aΔd - find a from V, v, d
+        // v² = v₀² + 2aΔx - find a from v, v₀, x
         if (vals.a == null && vals.V != null && vals.v != null && vals.d != null && Math.abs(vals.d) > 1e-12){
           vals.a = (vals.V*vals.V - vals.v*vals.v) / (2*vals.d);
-          steps.push(makeStepText('find acceleration', 'V² = v² + 2·a·Δd', 'a = (V² - v²)/(2·Δd)', 'a = (' + formatVal(vals.V) + '² - ' + formatVal(vals.v) + '²)/(2*' + formatVal(vals.d) + ')', 'a = ' + formatVal(vals.a) + ' m/s²'));
+          steps.push(makeStepText('find acceleration', 'v² = v₀² + 2·a·Δx', 'a = (v² - v₀²)/(2·Δx)', 'a = (' + formatVal(vals.V) + '² - ' + formatVal(vals.v) + '²)/(2*' + formatVal(vals.d) + ')', 'a = ' + formatVal(vals.a) + ' m/s²'));
           changed = true; continue;
         }
-        // Δd = vt + 0.5 at² - find a from d, v, t
+        // Δx = v₀t + 0.5 at² - find a from x, v₀, t
         if (vals.d != null && vals.v != null && vals.t != null && Math.abs(vals.t) > 1e-12){
           vals.a = (2*(vals.d - vals.v*vals.t))/(vals.t*vals.t);
-          steps.push(makeStepText('find acceleration', 'Δd = v·t + 0.5·a·t²', 'a = 2(Δd - v·t)/t²', 'a = 2(' + formatVal(vals.d) + ' - ' + formatVal(vals.v) + '·' + formatVal(vals.t) + ')/' + formatVal(vals.t) + '²', 'a = ' + formatVal(vals.a) + ' m/s²'));
+          steps.push(makeStepText('find acceleration', 'Δx = v₀·t + 0.5·a·t²', 'a = 2(Δx - v₀·t)/t²', 'a = 2(' + formatVal(vals.d) + ' - ' + formatVal(vals.v) + '·' + formatVal(vals.t) + ')/' + formatVal(vals.t) + '²', 'a = ' + formatVal(vals.a) + ' m/s²'));
           changed = true; continue;
         }
-        //Δd = Vt - 0.5 at² - find a from d, V, t
+        //Δx = v·t - 0.5 at² - find a from x, v, t
         if (vals.d != null && vals.V != null && vals.t != null && Math.abs(vals.t) > 1e-12){
           vals.a = (2*(vals.V*vals.t - vals.d))/(vals.t*vals.t);
-          steps.push(makeStepText('find acceleration', 'Δd = V·t - 0.5·a·t²', 'a = 2(V·t - Δd)/t²', 'a = 2(' + formatVal(vals.V) + '·' + formatVal(vals.t) + ' - ' + formatVal(vals.d) + ')/' + formatVal(vals.t) + '²', 'a = ' + formatVal(vals.a) + ' m/s²'));
+          steps.push(makeStepText('find acceleration', 'Δx = v·t - 0.5·a·t²', 'a = 2(v·t - Δx)/t²', 'a = 2(' + formatVal(vals.V) + '·' + formatVal(vals.t) + ' - ' + formatVal(vals.d) + ')/' + formatVal(vals.t) + '²', 'a = ' + formatVal(vals.a) + ' m/s²'));
           changed = true; continue;}
       }
       //Find t
       if (vals.t == null){
-        //V = v + at - find t from V, v, a
+        //v = v₀ + at - find t from v, v₀, a
         if (vals.V != null && vals.v != null && vals.a != null && Math.abs(vals.a) > 1e-12){
           vals.t = (vals.V - vals.v)/vals.a;
-          steps.push(makeStepText('find time', 'V = v + at', 't = (V - v)/a', 't = (' + formatVal(vals.V) + ' - ' + formatVal(vals.v) + ')/' + formatVal(vals.a), 't = ' + formatVal(vals.t) + ' s'));
+          steps.push(makeStepText('find time', 'v = v₀ + at', 't = (v - v₀)/a', 't = (' + formatVal(vals.V) + ' - ' + formatVal(vals.v) + ')/' + formatVal(vals.a), 't = ' + formatVal(vals.t) + ' s'));
           changed = true; continue;
         }
-        // Δd = 0.5 (v+V) t - find t from d, v, V
+        // Δx = 0.5 (v₀+v) t - find t from x, v₀, v
         if (vals.d != null && vals.v != null && vals.V != null && (Math.abs(vals.v + vals.V) > 1e-12)){
           vals.t = (2*vals.d)/(vals.v + vals.V);
-          steps.push(makeStepText('find time', 'Δd = (1/2)(v+V)t', 't = 2Δd/(v+V)', 't = (2*' + formatVal(vals.d) + ')/(' + formatVal(vals.v) + ' + ' + formatVal(vals.V) + ')', 't = ' + formatVal(vals.t) + ' s'));
+          steps.push(makeStepText('find time', 'Δx = (1/2)(v₀+v)t', 't = 2Δx/(v₀+v)', 't = (2*' + formatVal(vals.d) + ')/(' + formatVal(vals.v) + ' + ' + formatVal(vals.V) + ')', 't = ' + formatVal(vals.t) + ' s'));
           changed = true; continue;}
       }
     }
@@ -206,14 +206,14 @@ document.addEventListener('DOMContentLoaded', function(){
     var knownCount = Object.keys(vals).reduce(function(c,k){ return c + (vals[k] != null ? 1 : 0); }, 0);
     if (knownCount < 3) return {error: 'Need at least 3 known values (V, v, d, a, t).', steps: []};
 
-    // Variants case per spec: if missing (v or V) AND missing t -> produce ± roots from V² = v² + 2 a d
+    // Variants case per spec: if missing (v or V) AND missing t -> produce ± roots from v² = v₀² + 2 a Δx
     var variants = [];
     var needVariantCase = ((initial.V == null || initial.v == null) && initial.t == null);
     if (needVariantCase && vals.a != null && vals.d != null && (vals.v != null || vals.V != null)){
       // handle both situations: V missing (v known) OR v missing (V known)
       if (vals.v != null){
         var inside = vals.v*vals.v + 2*vals.a*vals.d;
-        if (inside < 0){ return {error: 'No real roots for V from V² = v² + 2aΔd', steps: []}; }
+        if (inside < 0){ return {error: 'No real roots for final velocity from v² = v₀² + 2aΔx', steps: []}; }
         var r = Math.sqrt(inside);
         [r, -r].forEach(function(root){
           var copy = {V: vals.V, v: vals.v, d: vals.d, a: vals.a, t: vals.t};
@@ -225,28 +225,28 @@ document.addEventListener('DOMContentLoaded', function(){
           if (tCandidate != null){
             var tEq, tReform, tSub;
             if (Math.abs(copy.a) > 1e-12 && copy.V != null && copy.v != null){
-              tEq = 'V = v + at';
-              tReform = 't = (V - v)/a';
+              tEq = 'v = v₀ + at';
+              tReform = 't = (v - v₀)/a';
               tSub = 't = (' + formatVal(copy.V) + ' - ' + formatVal(copy.v) + ')/' + formatVal(copy.a);
             } else {
-              tEq = 't = 2Δd/(v+V)';
-              tReform = 't = 2Δd/(v+V)';
+              tEq = 't = 2Δx/(v₀+v)';
+              tReform = 't = 2Δx/(v₀+v)';
               tSub = 't = (2*' + formatVal(copy.d) + ')/(' + formatVal(copy.v) + ' + ' + formatVal(copy.V) + ')';
             }
             tStep = makeStepText('find time', tEq, tReform, tSub, 't = ' + formatVal(tCandidate) + ' s');
           }
           // use makeStepText but show ± in reformatted and actual signed root in substituted/result
-          var eq = 'V² = v² + 2·a·Δd'; //find V from v, a, d
-          var reform = 'V = ±√(v² + 2·a·Δd)';
-          var substituted = 'V = ±√(' + formatVal(vals.v) + '² + 2·' + formatVal(vals.a) + '·' + formatVal(vals.d) + ') = ' + (root>=0?'+':'') + formatVal(root) + ' m/s';
-          var stepText = makeStepText('find final velocity', eq, reform, substituted, 'V = ' + formatVal(root) + ' m/s');
+          var eq = 'v² = v₀² + 2·a·Δx'; // find final v from v₀, a, x
+          var reform = 'v = ±√(v₀² + 2·a·Δx)';
+          var substituted = 'v = ±√(' + formatVal(vals.v) + '² + 2·' + formatVal(vals.a) + '·' + formatVal(vals.d) + ') = ' + (root>=0?'+':'') + formatVal(root) + ' m/s';
+          var stepText = makeStepText('find final velocity', eq, reform, substituted, 'v = ' + formatVal(root) + ' m/s');
           variants.push({V: (initial.V==null?root:vals.V), v: (initial.v==null?root:vals.v), t: Number.isFinite(tCandidate)?tCandidate:null, explanation: stepText, stepsV: stepText, stepsT: (tStep? tStep : '')});
         });
         return {values: vals, steps: [], variants: variants};
       }
       // else vals.V != null and v missing -> solve for v
       var inside2 = vals.V*vals.V - 2*vals.a*vals.d;
-      if (inside2 < 0){ return {error: 'No real roots for v from V² = v² + 2aΔd', steps: []}; }
+      if (inside2 < 0){ return {error: 'No real roots for initial velocity from v² = v₀² + 2aΔx', steps: []}; }
       var r2 = Math.sqrt(inside2);
       [r2, -r2].forEach(function(root){
         var copy = {V: vals.V, v: vals.v, d: vals.d, a: vals.a, t: vals.t};
@@ -258,20 +258,20 @@ document.addEventListener('DOMContentLoaded', function(){
         if (tCandidate != null){
           var tEq2, tReform2, tSub2;
           if (Math.abs(copy.a) > 1e-12 && copy.V != null && copy.v != null){
-            tEq2 = 'V = v + at';
-            tReform2 = 't = (V - v)/a';
+            tEq2 = 'v = v₀ + at';
+            tReform2 = 't = (v - v₀)/a';
             tSub2 = 't = (' + formatVal(copy.V) + ' - ' + formatVal(copy.v) + ')/' + formatVal(copy.a);
           } else {
-            tEq2 = 'Δd = (1/2)(v+V)t';
-            tReform2 = 't = 2Δd/(v+V)';
+            tEq2 = 'Δx = (1/2)(v₀+v)t';
+            tReform2 = 't = 2Δx/(v₀+v)';
             tSub2 = 't = (2*' + formatVal(copy.d) + ')/(' + formatVal(copy.v) + ' + ' + formatVal(copy.V) + ')';
           }
           tStep2 = makeStepText('find time', tEq2, tReform2, tSub2, 't = ' + formatVal(tCandidate) + ' s');
         }
-        var eq2 = 'V² = v² + 2·a·Δd'; //find v from V, a, d
-        var reform2 = 'v = ±√(V² - 2·a·Δd)';
-        var substituted2 = 'v = ±√(' + formatVal(vals.V) + '² - 2·' + formatVal(vals.a) + '·' + formatVal(vals.d) + ') = ' + (root>=0?'+':'') + formatVal(root) + ' m/s';
-        var stepText2 = makeStepText('find initial velocity', eq2, reform2, substituted2, 'v = ' + formatVal(root) + ' m/s');
+        var eq2 = 'v² = v₀² + 2·a·Δx'; // find initial v₀ from v, a, x
+        var reform2 = 'v₀ = ±√(v² - 2·a·Δx)';
+        var substituted2 = 'v₀ = ±√(' + formatVal(vals.V) + '² - 2·' + formatVal(vals.a) + '·' + formatVal(vals.d) + ') = ' + (root>=0?'+':'') + formatVal(root) + ' m/s';
+        var stepText2 = makeStepText('find initial velocity', eq2, reform2, substituted2, 'v₀ = ' + formatVal(root) + ' m/s');
         variants.push({V: (initial.V==null?root:vals.V), v: (initial.v==null?root:vals.v), t: Number.isFinite(tCandidate)?tCandidate:null, explanation: stepText2, stepsV: stepText2, stepsT: (tStep2? tStep2 : '')});
       });
       return {values: vals, steps: [], variants: variants};
@@ -315,7 +315,8 @@ document.addEventListener('DOMContentLoaded', function(){
             else if (vv.v !== solveResult.values.v) varName = 'v';
           }
           var displayVal = (varName === 'V') ? formatVal(vv.V) : formatVal(vv.v);
-          o.textContent = 'Variant ' + (idx+1) + ': ' + varName + ' = ' + displayVal;
+          var displayVar = (varName === 'V') ? 'v' : 'v₀';
+          o.textContent = 'Variant ' + (idx+1) + ': ' + displayVar + ' = ' + displayVal;
           variantSelect.appendChild(o);
         });
       }
@@ -326,14 +327,14 @@ document.addEventListener('DOMContentLoaded', function(){
       latestSolve.values.V = (chosen.V != null) ? chosen.V : latestSolve.values.V;
       latestSolve.values.v = (chosen.v != null) ? chosen.v : latestSolve.values.v;
       latestSolve.values.t = (chosen.t != null) ? chosen.t : latestSolve.values.t;
-      resultValues.textContent = ['V: ' + formatVal(chosen.V) + ' ' + units.V, 'v: ' + formatVal(chosen.v) + ' ' + units.v, 'd: ' + formatVal(solveResult.values.d) + ' ' + units.d, 'a: ' + formatVal(solveResult.values.a) + ' ' + units.a, 't: ' + (chosen.t!=null?formatVal(chosen.t):formatVal(solveResult.values.t)) + ' ' + units.t].join('\n');
+      resultValues.textContent = ['v: ' + formatVal(chosen.V) + ' ' + units.V, 'v₀: ' + formatVal(chosen.v) + ' ' + units.v, 'Δx: ' + formatVal(solveResult.values.d) + ' ' + units.d, 'a: ' + formatVal(solveResult.values.a) + ' ' + units.a, 't: ' + (chosen.t!=null?formatVal(chosen.t):formatVal(solveResult.values.t)) + ' ' + units.t].join('\n');
       addStepBox(chosen.stepsV || chosen.explanation || '—');
       if (chosen.stepsT && chosen.stepsT.trim() !== '') addStepBox(chosen.stepsT);
     } else {
       // no variants -> hide variant UI, show values and deterministic steps
       if (variantSelect){ variantSelect.innerHTML = ''; variantSelect.style.display = 'none'; }
       if (variantLabel) variantLabel.style.display = 'none';
-      resultValues.textContent = ['V: ' + formatVal(solveResult.values.V) + ' ' + units.V, 'v: ' + formatVal(solveResult.values.v) + ' ' + units.v, 'd: ' + formatVal(solveResult.values.d) + ' ' + units.d, 'a: ' + formatVal(solveResult.values.a) + ' ' + units.a, 't: ' + formatVal(solveResult.values.t) + ' ' + units.t].join('\n');
+      resultValues.textContent = ['v: ' + formatVal(solveResult.values.V) + ' ' + units.V, 'v₀: ' + formatVal(solveResult.values.v) + ' ' + units.v, 'Δx: ' + formatVal(solveResult.values.d) + ' ' + units.d, 'a: ' + formatVal(solveResult.values.a) + ' ' + units.a, 't: ' + formatVal(solveResult.values.t) + ' ' + units.t].join('\n');
       (solveResult.steps || []).forEach(function(s){ addStepBox(s); });
     }
   }
@@ -375,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function(){
       latestSolve.values.v = (vv.v != null) ? vv.v : latestSolve.values.v;
       latestSolve.values.t = (vv.t != null) ? vv.t : latestSolve.values.t;
       // show chosen variant
-      resultValues.textContent = ['V: ' + formatVal(vv.V) + ' m/s', 'v: ' + formatVal(vv.v) + ' m/s', 'd: ' + formatVal(latestSolve.values.d) + ' m', 'a: ' + formatVal(latestSolve.values.a) + ' m/s²', 't: ' + (vv.t!=null?formatVal(vv.t):formatVal(latestSolve.values.t)) + ' s'].join('\n');
+      resultValues.textContent = ['v: ' + formatVal(vv.V) + ' m/s', 'v₀: ' + formatVal(vv.v) + ' m/s', 'Δx: ' + formatVal(latestSolve.values.d) + ' m', 'a: ' + formatVal(latestSolve.values.a) + ' m/s²', 't: ' + (vv.t!=null?formatVal(vv.t):formatVal(latestSolve.values.t)) + ' s'].join('\n');
       explanation.innerHTML = '';
       addStepBox(vv.stepsV || vv.explanation || '—');
       if (vv.stepsT && vv.stepsT.trim() !== '') addStepBox(vv.stepsT);
