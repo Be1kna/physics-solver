@@ -40,6 +40,12 @@
     </form>
 
     <section id="results" aria-live="polite">
+      <div class="variant-select-wrap">
+        <label for="variant-select">Choose variant:</label>
+        <select id="variant-select" aria-label="Choose V/t variant">
+          <option value="auto">Auto (variant with longest t)</option>
+        </select>
+      </div>
       <h2>Results</h2>
       <pre id="result-values">No results yet.</pre>
 
@@ -59,7 +65,7 @@
             </div>
           </div>
         </div>
-        <p class="muted small sim-note">Simulation uses `v` (initial velocity), `a` (acceleration), and will run for provided `t`, or until distance `d` is reached, or until velocity reaches zero if decelerating.</p>
+        <p class="muted small sim-note">Simulation uses `v` (initial velocity), `a` (acceleration), and will run for provided `t`, or until distance `d` is reached.</p>
       </section>
 
       <h3>Steps</h3>

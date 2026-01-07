@@ -189,4 +189,32 @@ a{color:var(--accent)}
 [data-theme="dark"] .sim-readouts{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
 
 .sim-note{margin-top:10px;color:var(--muted);width:100%}
+/* inline root selector styling */
+.sim-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sim-root-inline{margin-left:auto;font-weight:600;color:var(--muted);font-size:0.95rem}
+#sim-root-mode{padding:6px 8px;border-radius:8px;border:1px solid #e6eef8;background:var(--card);font-size:0.95rem}
+[data-theme="dark"] #sim-root-mode{background:#0f1724;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+
+/* Variant dropdown styling (Kinematics variant select) */
+.variant-select-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.variant-select-wrap label{font-weight:700;color:var(--muted);margin: 5px;}
+#variant-select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding:8px 14px;
+  font-size:1.05rem;
+  border-radius:15px;
+  border:1px solid #e6eef8;
+  background: #fbfdff;
+  min-width:260px;
+  max-width:520px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+}
+
+[data-theme="dark"] #variant-select{ background:#222228; border:1px solid rgba(255,255,255,0.04); color:var(--text); }
+
+@media (max-width:700px){
+  #variant-select{ min-width:160px; font-size:1rem }
+}
 
